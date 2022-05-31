@@ -1,47 +1,45 @@
-import React, { DragEvent } from "react";
+import React, { DragEvent, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import "./App.css";
 
 function App() {
-  const dropHandler = (ev: DragEvent) => {
-    console.log("File(s) dropped");
+  const [image, setImage] = useState("");
 
+  const dropHandler = (ev: DragEvent) => {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
 
     if (ev.dataTransfer.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      for (var i = 0; i < ev.dataTransfer.items.length; i++) {
-        // If dropped items aren't files, reject them
-        if (ev.dataTransfer.items[i].kind === "file") {
-          var file = ev.dataTransfer.items[i].getAsFile();
-          file && console.log("... file[" + i + "].name = " + file.name);
+      if (ev.dataTransfer.items.length > 1) {
+        toast.error("Can't handle multiple files");
+      } else {
+        /* TODO: API supports additional types: video/*, application/octet-stream and application/x-www-form-urlencoded
+        need to do something with them*/
+        if (ev.dataTransfer.items[0].type.includes("image/")) {
+          const file = ev.dataTransfer.items[0].getAsFile();
+          file && setImage(URL.createObjectURL(file));
+        } else {
+          toast.error("Dropped file is not an image");
         }
-      }
-    } else {
-      // Use DataTransfer interface to access the file(s)
-      for (var i = 0; i < ev.dataTransfer.files.length; i++) {
-        console.log(
-          "... file[" + i + "].name = " + ev.dataTransfer.files[i].name
-        );
       }
     }
   };
 
   const dragOverHandler = (ev: DragEvent) => {
-    console.log("File(s) in drop zone");
-
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
   };
 
   return (
     <div className="App">
+      <Toaster position="top-right" reverseOrder={false} />
+      <img src={image} alt=""></img>
       <div
         className="dropzone"
         onDrop={dropHandler}
         onDragOver={dragOverHandler}
       >
-        <p>Drag frame from anime</p>
+        <p>Drop frame from anime</p>
       </div>
     </div>
   );
