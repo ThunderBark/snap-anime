@@ -1,0 +1,9 @@
+.dropzone {
+  display: block;
+  cursor: pointer;
+  text-align: center;
+  margin: auto;
+  border: 5px solid blue;
+  width: 200px;
+  height: 100px;
+}
