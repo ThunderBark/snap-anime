@@ -41,12 +41,29 @@ function App() {
   const onInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
     const value = ev.currentTarget.value;
     if (
-      value.length > 1 &&
+      value.length > 0 &&
       /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(value)
     ) {
       setImage(value);
     } else {
       console.log("This URL is not an image!");
+    }
+  };
+
+  const onSnapClick = async () => {
+    if (image.length > 0) {
+      await fetch(image)
+        .then((r) => {
+          return r.blob();
+        })
+        .then((data) => {
+          const formData = new FormData();
+          formData.append("image", data);
+          fetch("https://api.trace.moe/search", {
+            method: "POST",
+            body: formData,
+          }).then((e) => console.log(e.json()));
+        });
     }
   };
 
@@ -78,7 +95,7 @@ function App() {
       ></input>
       <br />
       <div>then</div>
-      <button>Snap!</button>
+      <button onClick={onSnapClick}>Snap!</button>
     </div>
   );
 }
