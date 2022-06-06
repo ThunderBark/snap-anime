@@ -1,4 +1,5 @@
 import { Toaster } from "react-hot-toast";
+import { AnimeList } from "./AnimeList/AnimeList";
 import "./App.css";
 import { ImageInput } from "./ImageInput/ImageInput";
 
@@ -10,6 +11,7 @@ function App() {
     <div className="App">
       <Toaster position="top-right" reverseOrder={false} />
       <ImageInput/>
+      <AnimeList/>
     </div>
   );
 }

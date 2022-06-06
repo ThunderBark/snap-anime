@@ -1,22 +1,22 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../app/store";
 
-export interface ImageInputState {
+export interface AnimeListState {
   status: "idle" | "loading" | "failed";
   value: number;
 }
 
-const initialState: ImageInputState = {
+const initialState: AnimeListState = {
   status: "idle",
   value: 0,
 };
 
-export const imageInputSlice = createSlice({
-  name: "imageInput",
+export const animeListSlice = createSlice({
+  name: "animeList",
   initialState,
   reducers: {},
 });
 
-export const {} = imageInputSlice.actions;
+export const {} = animeListSlice.actions;
 
-export default imageInputSlice.reducer;
+export default animeListSlice.reducer;
