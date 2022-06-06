@@ -38,6 +38,18 @@ function App() {
     ev.preventDefault();
   };
 
+  const onInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    const value = ev.currentTarget.value;
+    if (
+      value.length > 1 &&
+      /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(value)
+    ) {
+      setImage(value);
+    } else {
+      console.log("This URL is not an image!");
+    }
+  };
+
   return (
     <div className="App">
       <Toaster position="top-right" reverseOrder={false} />
@@ -59,8 +71,11 @@ function App() {
         onChange={fileChangeHandler}
       />
       <div>or</div>
-      <input placeholder="Enter image URL"></input>
-      <button>Submit</button>
+      <input
+        placeholder="Enter image URL"
+        type="url"
+        onChange={onInputChange}
+      ></input>
       <br />
       <div>then</div>
       <button>Snap!</button>
